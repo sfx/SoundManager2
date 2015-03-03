@@ -38,6 +38,7 @@ function SoundManager(smURL, smID) {
     'allowScriptAccess': 'always',
     'useFlashBlock': false,
     'useHTML5Audio': true,
+    'forceUseGlobalHTML5Audio': false,
     'html5Test': /^(probably|maybe)$/i,
     'preferFlash': false,
     'noSWFCache': false,
@@ -180,6 +181,9 @@ function SoundManager(smURL, smID) {
     if (options !== _undefined && didInit && needsFlash && sm2.ok() && (options.flashVersion !== _undefined || options.url !== _undefined || options.html5Test !== _undefined)) {
     }
     assign(options);
+    if (sm2.forceUseGlobalHTML5Audio) {
+      useGlobalHTML5Audio = true;
+    }
     if (options) {
       if (noURL && didDCLoaded && options.url !== _undefined) {
         sm2.beginDelayedInit();
@@ -2325,7 +2329,7 @@ featureCheck = function() {
     if (isIE) {
       oMovie = doc.createElement('div');
       movieHTML = [
-        '<object id="' + smID + '" data="' + smURL + '" type="' + oEmbed.type + '" title="' + oEmbed.title +'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="' + http+'download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0">',
+        '<object id="' + smID + '" data="' + smURL + '" type="' + oEmbed.type + '" title="' + oEmbed.title +'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0">',
         param('movie', smURL),
         param('AllowScriptAccess', sm2.allowScriptAccess),
         param('quality', oEmbed.quality),
